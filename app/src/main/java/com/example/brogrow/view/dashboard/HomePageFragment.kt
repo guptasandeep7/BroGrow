@@ -10,6 +10,9 @@ import android.view.ViewGroup
 import android.widget.*
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import com.android.volley.Request
 import com.android.volley.Response
 import com.android.volley.VolleyError
@@ -17,20 +20,33 @@ import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.Volley
 import com.example.brogrow.R
 import com.example.brogrow.databinding.FragmentHomePageBinding
+import com.example.brogrow.model.HomePageModel.HomePageModel
+import com.example.brogrow.viewmodel.HomePageViewModel
 import com.github.mikephil.charting.data.PieData
 import com.github.mikephil.charting.data.PieDataSet
 import com.github.mikephil.charting.data.PieEntry
 import com.google.android.material.bottomsheet.BottomSheetDialog
+import kotlinx.coroutines.launch
 import org.json.JSONException
 import org.json.JSONObject
+import java.text.Normalizer
+import java.util.*
+import java.util.EnumSet.range
+import java.util.regex.Pattern
+import kotlin.collections.ArrayList
+import kotlin.collections.HashMap
 
 
 class HomePageFragment : Fragment() {
 
     lateinit var  binding:FragmentHomePageBinding
+    lateinit var homePageViewModel:HomePageViewModel
+    var result:HomePageModel?=null
+     var district:String=""
+    var state:String=""
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
+        homePageViewModel=ViewModelProvider(this)[HomePageViewModel::class.java]
     }
 
     override fun onCreateView(
@@ -47,7 +63,9 @@ class HomePageFragment : Fragment() {
                     LayoutInflater.from(requireContext()).inflate(R.layout.fragment_bottom_pincode, null)
                 var okButton=dialodView.findViewById<Button>(R.id.PinCodeButton)
                 okButton.setOnClickListener(object : View.OnClickListener {
-                    override fun onClick(v: View?) {
+                    override  fun onClick(v: View?) {
+                        var pincode=dialodView.findViewById<EditText>(R.id.textView2)
+                        getDataFromPinCode(pincode.text.toString())
 
                     }
                 })
@@ -55,7 +73,7 @@ class HomePageFragment : Fragment() {
                 bottomSheet.show()
             }
         })
-        showPieChart()
+
         binding.Fashion.setOnClickListener(object : View.OnClickListener {
             override fun onClick(v: View?) {
                 val bottomSheet = BottomSheetDialog(requireContext())
@@ -94,11 +112,13 @@ class HomePageFragment : Fragment() {
 
         //initializing data
         val typeAmountMap: MutableMap<String, Int> = HashMap()
-        typeAmountMap["Toys"] = 200
-        typeAmountMap["Snacks"] = 230
-        typeAmountMap["Clothes"] = 100
-        typeAmountMap["Stationary"] = 500
-        typeAmountMap["Phone"] = 50
+       for(i in 0 until result?.competitorAnalysis?.competitors!!.size)
+       {
+           if(i<5)
+           {
+               typeAmountMap[result!!.competitorAnalysis.competitors[i]]
+           }
+       }
 
         //initializing colors for the entries
         val colors: ArrayList<Int> = ArrayList()
@@ -167,18 +187,30 @@ class HomePageFragment : Fragment() {
 
                             // inside our json array we are getting district name,
                             // state and country from our data.
-                            val district = obj.getString("District")
-                            val state = obj.getString("State")
+                             district = obj.getString("District")
+                             state = obj.getString("State")
                             val country = obj.getString("Country")
+                            lifecycleScope.launch {
+                                Toast.makeText(requireContext(),makeSlug(state),Toast.LENGTH_LONG).show()
+                                 var result1 = homePageViewModel.getHomeLiveData(
+                                    pinCode,
+                                    makeSlug(state).toString(),
+                                    district.toLowerCase(),
+                                    "Alcohol"
+                                )
+                                result1.observe(viewLifecycleOwner) {
+                                    when (it) {
+                                        is com.example.brogrow.network.Response.Success -> {
+                                            result=it.data
+                                            showPieChart()
+                                            binding.OpportunitiesProgressBar.progress =
+                                                it.data?.oppurtunityRating?.rating?.toInt()!!
+                                        }
 
-                            // after getting all data we are setting this data in
-                            // our text view on below line.
-//                            pinCodeDetailsTV.text = """
-//                        Details of pin code is :
-//                        District is : $district
-//                        State : $state
-//                        Country : $country
-//                        """.trimIndent()
+                                    }
+                                }
+                            }
+
                         }
                     } catch (e: JSONException) {
                         // if we gets any error then it
@@ -192,7 +224,7 @@ class HomePageFragment : Fragment() {
                     // below method is called if we get
                     // any error while fetching data from API.
                     // below line is use to display an error message.
-                    Toast.makeText(requireContext(), "Pin code is not valid.", Toast.LENGTH_SHORT)
+                    Toast.makeText(requireContext(), error.toString(), Toast.LENGTH_SHORT)
                         .show()
 
                 }
@@ -201,6 +233,14 @@ class HomePageFragment : Fragment() {
         // request to our request queue.
         queue.add(objectRequest)
     }
-
+    fun makeSlug(input: String?): String? {
+        var NONLATIN = Pattern.compile("[^\\w_-]");
+        var SEPARATORS = Pattern.compile("[\\s\\p{Punct}&&[^-]]");
+        val noseparators: String = SEPARATORS.matcher(input).replaceAll("-")
+        val normalized: String = Normalizer.normalize(noseparators, Normalizer.Form.NFD)
+        val slug: String = NONLATIN.matcher(normalized).replaceAll("")
+        return slug.lowercase(Locale.ENGLISH).replace("-{2,}".toRegex(), "-")
+            .replace("^-|-$".toRegex(), "")
+    }
 
 }
