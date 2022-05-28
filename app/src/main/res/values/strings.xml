@@ -4,4 +4,32 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="next">Next</string>
     <string name="enter_your_name">Enter your Name</string>
+    <string name="compare">Compare</string>
+    <string name="enter_pincode">Enter Pincode</string>
+    <string name="select_category">Select Category</string>
+    <string-array name="category_array">
+        <item>Category</item>
+        <item>Hospitality</item>
+        <item>Logistics</item>
+        <item>Banks</item>
+        <item>Telecom</item>
+        <item>Paper</item>
+        <item>Media &amp; Entertainment</item>
+        <item>Ship Building</item>
+        <item>Automobile &amp; Ancillaries</item>
+        <item>Electricals</item>
+        <item>Metals &amp; Mining</item>
+        <item>Footwear</item>
+        <item>Software &amp; IT Services</item>
+        <item>Insurance</item>
+        <item>Aviation</item>
+        <item>Infrastructure</item>
+        <item>Containers &amp; Packaging</item>
+        <item>Real Estate</item>
+        <item>Construction Materials</item>
+        <item>Photographic Products</item>
+        <item>Diversified</item>
+
+    </string-array>
+
 </resources>

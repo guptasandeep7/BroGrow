@@ -8,7 +8,4 @@
         android:icon="@drawable/comparisonselection"
         android:id="@+id/comparisonPage"
         />
-    <item android:title="Profile"
-        android:icon="@drawable/profileselection"
-        android:id="@+id/profilePage"/>
 </menu>
