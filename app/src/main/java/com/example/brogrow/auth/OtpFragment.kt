@@ -2,23 +2,19 @@ package com.example.brogrow.auth
 
 import android.content.Context
 import android.os.Bundle
-import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import android.widget.Button
-import android.widget.EditText
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.example.brogrow.R
 import com.example.brogrow.databinding.FragmentOtpBinding
-import com.example.brogrow.repo.DATASTORE_NAME
 import com.example.brogrow.repo.Datastore
 import com.google.android.material.textfield.TextInputEditText
-import com.google.firebase.FirebaseApp
 import com.google.firebase.FirebaseException
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.PhoneAuthCredential
@@ -43,7 +39,7 @@ class OtpFragment : Fragment() {
         super.onCreate(savedInstanceState)
 
         datastore = Datastore(requireContext())
-        mAuth=FirebaseAuth.getInstance()
+        mAuth = FirebaseAuth.getInstance()
         lifecycleScope.launch {
             sendVerificationCode(phoneNumber)
         }
@@ -62,8 +58,8 @@ class OtpFragment : Fragment() {
 
         verifyOTPBtn.setOnClickListener {
             binding.progressBar.visibility = View.VISIBLE
-                verifyCode(edtOTP.getText().toString())
-            }
+            verifyCode(edtOTP.getText().toString())
+        }
 
         return binding.root
     }
@@ -73,7 +69,10 @@ class OtpFragment : Fragment() {
             mCallBack: PhoneAuthProvider.OnVerificationStateChangedCallbacks =
         object : PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
 
-            override fun onCodeSent(s: String, forceResendingToken: PhoneAuthProvider.ForceResendingToken) {
+            override fun onCodeSent(
+                s: String,
+                forceResendingToken: PhoneAuthProvider.ForceResendingToken
+            ) {
                 super.onCodeSent(s, forceResendingToken)
 
                 verificationId = s
