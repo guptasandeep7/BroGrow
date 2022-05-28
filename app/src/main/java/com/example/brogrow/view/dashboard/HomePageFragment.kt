@@ -7,17 +7,22 @@ import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ArrayAdapter
-import android.widget.EditText
-import android.widget.ListView
+import android.widget.*
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import com.android.volley.Request
+import com.android.volley.Response
+import com.android.volley.VolleyError
+import com.android.volley.toolbox.JsonObjectRequest
+import com.android.volley.toolbox.Volley
 import com.example.brogrow.R
 import com.example.brogrow.databinding.FragmentHomePageBinding
 import com.github.mikephil.charting.data.PieData
 import com.github.mikephil.charting.data.PieDataSet
 import com.github.mikephil.charting.data.PieEntry
 import com.google.android.material.bottomsheet.BottomSheetDialog
+import org.json.JSONException
+import org.json.JSONObject
 
 
 class HomePageFragment : Fragment() {
@@ -40,6 +45,12 @@ class HomePageFragment : Fragment() {
                 val bottomSheet = BottomSheetDialog(requireContext())
                 val dialodView =
                     LayoutInflater.from(requireContext()).inflate(R.layout.fragment_bottom_pincode, null)
+                var okButton=dialodView.findViewById<Button>(R.id.PinCodeButton)
+                okButton.setOnClickListener(object : View.OnClickListener {
+                    override fun onClick(v: View?) {
+
+                    }
+                })
                 bottomSheet.setContentView(dialodView)
                 bottomSheet.show()
             }
@@ -91,17 +102,17 @@ class HomePageFragment : Fragment() {
 
         //initializing colors for the entries
         val colors: ArrayList<Int> = ArrayList()
-        colors.add(Color.parseColor("#304567"))
-        colors.add(Color.parseColor("#309967"))
-        colors.add(Color.parseColor("#476567"))
-        colors.add(Color.parseColor("#890567"))
+        colors.add(Color.parseColor("#E272B6"))
+        colors.add(Color.parseColor("#4FC4F5"))
+        colors.add(Color.parseColor("#F0D64C"))
+        colors.add(Color.parseColor("#DA7878"))
         colors.add(Color.parseColor("#a35567"))
         colors.add(Color.parseColor("#ff5f67"))
-        colors.add(Color.parseColor("#3ca567"))
+        colors.add(Color.parseColor("#7F84EC"))
 
         //input data and fit data into pie chart entry
         for (type in typeAmountMap.keys) {
-            pieEntries.add(PieEntry(typeAmountMap[type]!!.toFloat(), type))
+            pieEntries.add(PieEntry(typeAmountMap[type]!!.toFloat()))
         }
 
         //collecting the entries with label name
@@ -112,10 +123,83 @@ class HomePageFragment : Fragment() {
         pieDataSet.colors = colors
         //grouping the data set from entry to chart
         val pieData = PieData(pieDataSet)
-        //showing the value of the entries, default true if not set
-        pieData.setDrawValues(true)
+        //showing the value of the entries, default true if not
+        pieData.setDrawValues(true);
         binding.CompetitionChart.setData(pieData)
         binding.CompetitionChart.invalidate()
+    }
+    private fun getDataFromPinCode(pinCode: String) {
+
+        // clearing our cache of request queue.
+//        mRequestQueue.cache.clear()
+
+        // below is the url from where we will be getting
+        // our response in the json format.
+        val url = "http://www.postalpincode.in/api/pincode/$pinCode"
+
+        // below line is use to initialize our request queue.
+        val queue = Volley.newRequestQueue(requireContext())
+
+        // in below line we are creating a
+        // object request using volley.
+        val objectRequest =
+            JsonObjectRequest(Request.Method.GET, url, null, object : Response.Listener<JSONObject?> {
+
+                override fun onResponse(response: JSONObject?) {
+                    // inside this method we will get two methods
+                    // such as on response method
+                    // inside on response method we are extracting
+                    // data from the json format.
+                    try {
+                        // we are getting data of post office
+                        // in the form of JSON file.
+                        val postOfficeArray = response!!.getJSONArray("PostOffice")
+                        if (response!!.getString("Status") == "Error") {
+                            // validating if the response status is success or failure.
+                            // in this method the response status is having error and
+                            // we are setting text to TextView as invalid pincode.
+//                            pinCodeDetailsTV.text = "Pin code is not valid."
+                        } else {
+                            // if the status is success we are calling this method
+                            // in which we are getting data from post office object
+                            // here we are calling first object of our json array.
+                            val obj = postOfficeArray.getJSONObject(0)
+
+                            // inside our json array we are getting district name,
+                            // state and country from our data.
+                            val district = obj.getString("District")
+                            val state = obj.getString("State")
+                            val country = obj.getString("Country")
+
+                            // after getting all data we are setting this data in
+                            // our text view on below line.
+//                            pinCodeDetailsTV.text = """
+//                        Details of pin code is :
+//                        District is : $district
+//                        State : $state
+//                        Country : $country
+//                        """.trimIndent()
+                        }
+                    } catch (e: JSONException) {
+                        // if we gets any error then it
+                        // will be printed in log cat.
+                        e.printStackTrace()
+//                        pinCodeDetailsTV.text = "Pin code is not valid"
+                    }
+                }
+            }, object : Response.ErrorListener {
+                override fun onErrorResponse(error: VolleyError?) {
+                    // below method is called if we get
+                    // any error while fetching data from API.
+                    // below line is use to display an error message.
+                    Toast.makeText(requireContext(), "Pin code is not valid.", Toast.LENGTH_SHORT)
+                        .show()
+
+                }
+            })
+        // below line is use for adding object
+        // request to our request queue.
+        queue.add(objectRequest)
     }
 
 
