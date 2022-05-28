@@ -1,5 +1,6 @@
 package com.example.brogrow.view.dashboard
 
+import android.content.res.ColorStateList
 import android.graphics.Color
 import android.os.Bundle
 import android.text.Editable
@@ -10,7 +11,6 @@ import android.view.ViewGroup
 import android.widget.*
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
@@ -32,17 +32,18 @@ import org.json.JSONException
 import org.json.JSONObject
 import java.text.Normalizer
 import java.util.*
-import java.util.EnumSet.range
 import java.util.regex.Pattern
-import kotlin.collections.ArrayList
-import kotlin.collections.HashMap
 
 
 class HomePageFragment : Fragment() {
 
     lateinit var  binding:FragmentHomePageBinding
     lateinit var homePageViewModel:HomePageViewModel
-    var result:HomePageModel?=null
+    companion object
+    {
+        var result: HomePageModel?=null
+    }
+
      var district:String=""
     var state:String=""
     var pincode:String=""
@@ -152,12 +153,14 @@ class HomePageFragment : Fragment() {
         val label = "type"
 
         //initializing data
-        val typeAmountMap: MutableMap<String, Int> = HashMap()
+        val typeAmountMap: MutableMap<String, Float> = HashMap()
+
        for(i in 0 until result?.competitorAnalysis?.competitors!!.size)
        {
+           var size= result?.competitorAnalysis?.competitors!!.size*100
            if(i<5)
-           {
-               typeAmountMap[result!!.competitorAnalysis.competitors[i]]
+           {  Toast.makeText(requireContext(),((result!!.competitorAnalysis.competitors[i].competitor_rating.toFloat()/size)*100).toString(),Toast.LENGTH_LONG).show()
+               typeAmountMap[result!!.competitorAnalysis.competitors[i].competitor_name.toString()]=(result!!.competitorAnalysis.competitors[i].competitor_rating.toFloat())/size*100
            }
        }
 
@@ -173,7 +176,7 @@ class HomePageFragment : Fragment() {
 
         //input data and fit data into pie chart entry
         for (type in typeAmountMap.keys) {
-            pieEntries.add(PieEntry(typeAmountMap[type]!!.toFloat()))
+            pieEntries.add(PieEntry(typeAmountMap[type]!!.toFloat(), type))
         }
 
         //collecting the entries with label name
@@ -185,7 +188,8 @@ class HomePageFragment : Fragment() {
         //grouping the data set from entry to chart
         val pieData = PieData(pieDataSet)
         //showing the value of the entries, default true if not
-        pieData.setDrawValues(true);
+        pieData.setDrawValues(true)
+
         binding.CompetitionChart.setData(pieData)
         binding.CompetitionChart.invalidate()
     }
@@ -244,7 +248,30 @@ class HomePageFragment : Fragment() {
                                     when (it) {
                                         is com.example.brogrow.network.Response.Success -> {
                                             result=it.data
+                                            var opportunityrating= it.data!!.oppurtunityRating.rating.toInt()
+                                            if(opportunityrating<25)
+                                            {
+                                                binding.OpportunitiesProgressBar.progressTintList=
+                                                    ColorStateList.valueOf(Color.parseColor("#CF3939"))
+                                            }
+                                            else if(opportunityrating<50)
+                                            {
+                                                binding.OpportunitiesProgressBar.progressTintList=
+                                                    ColorStateList.valueOf(Color.parseColor("#D0691F"))
+                                            }
+                                            else if(opportunityrating<75)
+                                            {
+                                                binding.OpportunitiesProgressBar.progressTintList=
+                                                    ColorStateList.valueOf(Color.parseColor("#CFB739"))
+                                            }
+                                            else
+                                            {
+                                                binding.OpportunitiesProgressBar.progressTintList=
+                                                    ColorStateList.valueOf(Color.parseColor("#43932F"))
+                                            }
                                             showPieChart()
+
+                                            binding.OpportunitiesPercentage.text= it.data!!.oppurtunityRating.rating.toString() + "%"
                                             binding.OpportunitiesProgressBar.progress =
                                                 it.data?.oppurtunityRating?.rating?.toInt()!!
                                         }

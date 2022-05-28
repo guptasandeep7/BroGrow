@@ -2,7 +2,6 @@ package com.example.brogrow.network
 
 import com.example.brogrow.model.HomePageModel.HomePageModel
 import com.example.brogrow.model.UserResponse
-import com.google.android.gms.common.internal.safeparcel.SafeParcelable
 import retrofit2.Call
 import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded
