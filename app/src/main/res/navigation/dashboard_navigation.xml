@@ -8,7 +8,11 @@
     <fragment
         android:id="@+id/homePageFragment"
         android:name="com.example.brogrow.view.dashboard.HomePageFragment"
-        android:label="HomePageFragment" />
+        android:label="HomePageFragment" >
+        <action
+            android:id="@+id/action_homePageFragment_to_categorialAnalysis"
+            app:destination="@id/categorialAnalysis" />
+    </fragment>
     <fragment
         android:id="@+id/comparisonPage"
         android:name="com.example.brogrow.view.dashboard.ComparisonPage"
@@ -19,4 +23,9 @@
         android:name="com.example.brogrow.view.dashboard.ProfilePage"
         android:label="fragment_profile_page"
         tools:layout="@layout/fragment_profile_page" />
+    <fragment
+        android:id="@+id/categorialAnalysis"
+        android:name="com.example.brogrow.view.dashboard.CategorialAnalysis"
+        android:label="fragment_categorial_analysis"
+        tools:layout="@layout/fragment_categorial_analysis" />
 </navigation>

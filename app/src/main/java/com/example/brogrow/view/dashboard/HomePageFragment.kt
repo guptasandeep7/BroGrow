@@ -13,6 +13,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import com.android.volley.Request
 import com.android.volley.Response
 import com.android.volley.VolleyError
@@ -44,6 +45,7 @@ class HomePageFragment : Fragment() {
     var result:HomePageModel?=null
      var district:String=""
     var state:String=""
+    var pincode:String=""
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         homePageViewModel=ViewModelProvider(this)[HomePageViewModel::class.java]
@@ -64,8 +66,9 @@ class HomePageFragment : Fragment() {
                 var okButton=dialodView.findViewById<Button>(R.id.PinCodeButton)
                 okButton.setOnClickListener(object : View.OnClickListener {
                     override  fun onClick(v: View?) {
-                        var pincode=dialodView.findViewById<EditText>(R.id.textView2)
-                        getDataFromPinCode(pincode.text.toString())
+                        var pincodeBox=dialodView.findViewById<EditText>(R.id.textView2)
+                        pincode=pincodeBox.text.toString()
+                        getDataFromPinCode(pincode)
 
                     }
                 })
@@ -84,8 +87,26 @@ class HomePageFragment : Fragment() {
                 var listview= dialodView.findViewById<ListView>(R.id.listview)
                 var edittext=dialodView.findViewById<EditText>(R.id.edit_text)
                 var arrayList=ArrayList<String>()
-                arrayList.add("Accomdation")
-                arrayList.add("Sandeep")
+                arrayList.add("Hospitality")
+                arrayList.add("Logistics")
+                arrayList.add("Banks")
+                arrayList.add("Telecom")
+                arrayList.add("Paper")
+                arrayList.add("Media &amp; Entertainment")
+                arrayList.add("Ship Building")
+                arrayList.add("Automobile &amp; Ancillaries")
+                arrayList.add("Electricals")
+                arrayList.add("Metals &amp; Mining")
+                arrayList.add("Footwear")
+                arrayList.add("Software &amp; IT Services")
+                arrayList.add("Insurance")
+                arrayList.add("Aviation")
+                arrayList.add("Infrastructure")
+                arrayList.add("Containers &amp; Packaging")
+                arrayList.add("Real Estate")
+                arrayList.add("Construction Materials")
+                arrayList.add("Photographic Products")
+                arrayList.add("Diversified")
                 var adapter = ArrayAdapter(requireContext(), android.R.layout.simple_list_item_1, arrayList)
                 listview.adapter=adapter
                 edittext.addTextChangedListener(object : TextWatcher {
@@ -101,6 +122,26 @@ class HomePageFragment : Fragment() {
 
                     }
                 })
+                listview.setOnItemClickListener(object : AdapterView.OnItemClickListener {
+                    override fun onItemClick(
+                        parent: AdapterView<*>?,
+                        view: View?,
+                        position: Int,
+                        id: Long
+                    ) {
+                        binding.Fashion.text=adapter.getItem(position)
+                        getDataFromPinCode(pincode)
+                        bottomSheet.dismiss()
+
+                    }
+                })
+            }
+        })
+
+
+        binding.CatgoralAnalysis.setOnClickListener(object : View.OnClickListener {
+            override fun onClick(v: View?) {
+                findNavController().navigate(R.id.categorialAnalysis)
             }
         })
         return binding.root
@@ -189,9 +230,10 @@ class HomePageFragment : Fragment() {
                             // state and country from our data.
                              district = obj.getString("District")
                              state = obj.getString("State")
+                            binding.Location.text=district.toString()
                             val country = obj.getString("Country")
                             lifecycleScope.launch {
-                                Toast.makeText(requireContext(),makeSlug(state),Toast.LENGTH_LONG).show()
+
                                  var result1 = homePageViewModel.getHomeLiveData(
                                     pinCode,
                                     makeSlug(state).toString(),
