@@ -19,6 +19,9 @@ class PhoneNumberFragment : Fragment() {
     private val binding get() = _binding!!
     lateinit var datastore: Datastore
 
+    companion object{
+        lateinit var phoneNumber:String
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,6 +39,7 @@ class PhoneNumberFragment : Fragment() {
         binding.otpBtn.setOnClickListener {
             val phone = binding.phoneEt.text.toString()
             if(phone.length == 10){
+                phoneNumber = phone
                 lifecycleScope.launch {
                     datastore.saveToDatastore(Datastore.PHONE_NUMBER,phone,requireContext())
                 }

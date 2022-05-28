@@ -32,7 +32,7 @@ class OtpFragment : Fragment() {
     private var _binding: FragmentOtpBinding? = null
     private val binding get() = _binding!!
     lateinit var datastore: Datastore
-    private lateinit var phoneNumber:String
+    private val phoneNumber = "+91${PhoneNumberFragment.phoneNumber}"
 
     private var mAuth: FirebaseAuth? = null
     lateinit var edtOTP: TextInputEditText
@@ -43,9 +43,8 @@ class OtpFragment : Fragment() {
         super.onCreate(savedInstanceState)
 
         datastore = Datastore(requireContext())
-
+        mAuth=FirebaseAuth.getInstance()
         lifecycleScope.launch {
-            phoneNumber = "+91${datastore.getUserDetails(Datastore.PHONE_NUMBER).toString()}"
             sendVerificationCode(phoneNumber)
         }
 
@@ -58,7 +57,6 @@ class OtpFragment : Fragment() {
         _binding = FragmentOtpBinding.inflate(inflater, container, false)
 
         //Firebase OTP
-        mAuth=FirebaseAuth.getInstance()
         edtOTP = binding.otpEt
         verifyOTPBtn = binding.nextBtn
 
