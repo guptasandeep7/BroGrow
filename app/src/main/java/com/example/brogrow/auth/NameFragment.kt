@@ -1,6 +1,7 @@
 package com.example.brogrow.auth
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.provider.ContactsContract
 import androidx.fragment.app.Fragment
@@ -13,6 +14,7 @@ import androidx.navigation.fragment.findNavController
 import com.example.brogrow.databinding.FragmentNameBinding
 import com.example.brogrow.repo.DATASTORE_NAME
 import com.example.brogrow.repo.Datastore
+import com.example.brogrow.view.dashboard.DashBoardActivity
 import kotlinx.coroutines.launch
 
 class NameFragment : Fragment() {
@@ -42,6 +44,8 @@ class NameFragment : Fragment() {
                     datastore.saveToDatastore(Datastore.NAME_KEY,name,requireContext())
                 }
                 // navigate to dashboard
+                startActivity(Intent(activity,DashBoardActivity::class.java))
+                activity?.finish()
             }
             else{
                 binding.nameLayout.helperText = "Enter valid name"

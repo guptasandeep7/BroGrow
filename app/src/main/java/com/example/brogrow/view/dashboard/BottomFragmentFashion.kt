@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
+import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import com.example.brogrow.R
 import com.example.brogrow.databinding.FragmentBottomFashionBinding
@@ -29,29 +30,7 @@ lateinit var binding:FragmentBottomFashionBinding
     ): View? {
         // Inflate the layout for this fragment
         binding=DataBindingUtil.inflate(inflater,R.layout.fragment_bottom_fashion, container, false)
-        var arrayList=ArrayList<String>()
-        arrayList.add("Kunal Is God")
-        arrayList.add("kUNAL IS GOOD")
-        arrayList.add("Kunal is best")
-        arrayList.add("kunal is nice")
-        arrayList.add("good")
 
-        val adapter = ArrayAdapter(requireContext(), android.R.layout.simple_list_item_1, arrayList)
-        binding.listview.adapter=adapter
-
-        binding.editText.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-
-            }
-
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                adapter.getFilter().filter(s);
-            }
-
-            override fun afterTextChanged(s: Editable?) {
-
-            }
-        })
         return binding.root
     }
 
