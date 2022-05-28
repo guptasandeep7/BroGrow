@@ -22,6 +22,14 @@
           }
         },
         {
+          "client_id": "987586869057-sa2dcfr1mva0p4tnc56l2jnesnel5gma.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.brogrow",
+            "certificate_hash": "e164a3e16fe7241b379e8087a0c8114c986e33e7"
+          }
+        },
+        {
           "client_id": "987586869057-fm5coe7rgdrfh982qsanc53546i4djub.apps.googleusercontent.com",
           "client_type": 3
         }
