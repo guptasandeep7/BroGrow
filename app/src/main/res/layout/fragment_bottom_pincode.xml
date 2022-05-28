@@ -9,43 +9,64 @@
 
     <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         tools:context=".view.dashboard.BottomFragmentPincode">
 
-   <androidx.constraintlayout.widget.ConstraintLayout
-       android:layout_width="match_parent"
-       android:layout_height="match_parent">
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
-       <TextView
-           android:id="@+id/textView"
-           android:layout_width="0dp"
-           android:layout_height="wrap_content"
-           android:layout_marginStart="108dp"
-           android:layout_marginTop="12dp"
-           android:layout_marginEnd="108dp"
-           android:fontFamily="@font/source_sans_pro_bold"
-           android:text="Enter Pincode"
-           android:textAlignment="center"
-           android:textColor="#000000"
-           android:textSize="24sp"
-           app:layout_constraintEnd_toEndOf="parent"
-           app:layout_constraintStart_toStartOf="parent"
-           app:layout_constraintTop_toTopOf="parent" />
 
-       <TextView
-           android:id="@+id/textView2"
-           android:layout_width="wrap_content"
-           android:layout_height="wrap_content"
-           android:layout_marginStart="24dp"
-           android:layout_marginTop="12dp"
-           android:paddingStart="16dp"
-           android:paddingTop="16dp"
-           android:paddingEnd="16dp"
-           android:paddingBottom="16dp"
-           android:text="TextView"
-           app:layout_constraintStart_toStartOf="parent"
-           app:layout_constraintTop_toBottomOf="@+id/textView" />
-   </androidx.constraintlayout.widget.ConstraintLayout>
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="108dp"
+                android:layout_marginTop="24dp"
+                android:layout_marginEnd="108dp"
+                android:fontFamily="@font/source_sans_pro_bold"
+                android:text="Enter Pincode"
+                android:textAlignment="center"
+                android:textColor="#000000"
+                android:textSize="24sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/textInputLayout"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="12dp"
+                android:layout_marginEnd="100dp"
+                android:layout_marginBottom="16dp"
+                app:boxBackgroundColor="@null"
+                app:boxCornerRadiusTopStart="10dp"
+                app:boxStrokeColor="#08ADFF"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/textView2"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:hint="Enter PinCode"
+                    android:text="" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.button.MaterialButton
+                android:layout_width="wrap_content"
+                android:layout_height="68dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginBottom="4dp"
+                android:text="OK"
+                app:backgroundTint="#08ADFF"
+                app:layout_constraintBottom_toBottomOf="@+id/textInputLayout"
+                app:layout_constraintStart_toEndOf="@+id/textInputLayout"
+                app:layout_constraintTop_toTopOf="@+id/textInputLayout" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
     </FrameLayout>
 </layout>

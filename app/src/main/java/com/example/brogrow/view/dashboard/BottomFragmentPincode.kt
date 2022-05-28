@@ -6,10 +6,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.example.brogrow.R
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
 
-class BottomFragmentPincode : BottomSheetDialogFragment() {
+class BottomFragmentPincode : BottomSheetDialogFragment(){
 
 
     override fun onCreate(savedInstanceState: Bundle?) {

@@ -8,6 +8,7 @@
         <entry key="..\:/Users/KUNAL/AndroidStudioProjects/BroGrow/app/src/main/res/drawable/comparisonselection.xml" value="0.1855" />
         <entry key="..\:/Users/KUNAL/AndroidStudioProjects/BroGrow/app/src/main/res/drawable/ic_baseline_arrow_drop_down_24.xml" value="0.1855" />
         <entry key="..\:/Users/KUNAL/AndroidStudioProjects/BroGrow/app/src/main/res/drawable/ic_baseline_keyboard_arrow_down_24.xml" value="0.1855" />
+        <entry key="..\:/Users/KUNAL/AndroidStudioProjects/BroGrow/app/src/main/res/drawable/ic_baseline_search_24.xml" value="0.1855" />
         <entry key="..\:/Users/KUNAL/AndroidStudioProjects/BroGrow/app/src/main/res/drawable/ic_comparison.xml" value="0.1855" />
         <entry key="..\:/Users/KUNAL/AndroidStudioProjects/BroGrow/app/src/main/res/drawable/ic_comparison_deselected.xml" value="0.1855" />
         <entry key="..\:/Users/KUNAL/AndroidStudioProjects/BroGrow/app/src/main/res/drawable/ic_fashionicon.xml" value="0.1855" />
@@ -19,12 +20,15 @@
         <entry key="..\:/Users/KUNAL/AndroidStudioProjects/BroGrow/app/src/main/res/drawable/profileselection.xml" value="0.1855" />
         <entry key="..\:/Users/KUNAL/AndroidStudioProjects/BroGrow/app/src/main/res/layout/activity_dash_board.xml" value="0.25" />
         <entry key="..\:/Users/KUNAL/AndroidStudioProjects/BroGrow/app/src/main/res/layout/activity_main.xml" value="0.25" />
-        <entry key="..\:/Users/KUNAL/AndroidStudioProjects/BroGrow/app/src/main/res/layout/fragment_bottom_pincode.xml" value="0.25" />
+        <entry key="..\:/Users/KUNAL/AndroidStudioProjects/BroGrow/app/src/main/res/layout/fragment_bottom_fashion.xml" value="0.25" />
+        <entry key="..\:/Users/KUNAL/AndroidStudioProjects/BroGrow/app/src/main/res/layout/fragment_bottom_pincode.xml" value="0.264" />
         <entry key="..\:/Users/KUNAL/AndroidStudioProjects/BroGrow/app/src/main/res/layout/fragment_comparison_page.xml" value="0.25" />
         <entry key="..\:/Users/KUNAL/AndroidStudioProjects/BroGrow/app/src/main/res/layout/fragment_home_page.xml" value="0.264" />
         <entry key="..\:/Users/KUNAL/AndroidStudioProjects/BroGrow/app/src/main/res/layout/fragment_profile_page.xml" value="0.25" />
         <entry key="..\:/Users/KUNAL/AndroidStudioProjects/BroGrow/app/src/main/res/layout/toolbar_layout.xml" value="0.4" />
         <entry key="..\:/Users/KUNAL/AndroidStudioProjects/BroGrow/app/src/main/res/menu/menu.xml" value="0.25" />
+        <entry key="..\:/Users/KUNAL/AppData/Local/Android/Sdk/platforms/android-32/data/res/drawable/editbox_background.xml" value="0.1855" />
+        <entry key="..\:/Users/KUNAL/AppData/Local/Android/Sdk/platforms/android-32/data/res/layout/simple_list_item_1.xml" value="0.25" />
       </map>
     </option>
   </component>
