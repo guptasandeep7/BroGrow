@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "987586869057",
+    "project_id": "brogrow-d8fa5",
+    "storage_bucket": "brogrow-d8fa5.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:987586869057:android:e487b081c8133990af13c0",
+        "android_client_info": {
+          "package_name": "com.example.brogrow"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "987586869057-2682k9le84p8kqfamgulmdr32labtv4o.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.brogrow",
+            "certificate_hash": "9a86e7b88e9473b6aca99523734b15f55013acf5"
+          }
+        },
+        {
+          "client_id": "987586869057-fm5coe7rgdrfh982qsanc53546i4djub.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB2lAR2anlZc4WWajbKBL-O0VK7RwTz3ek"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "987586869057-fm5coe7rgdrfh982qsanc53546i4djub.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

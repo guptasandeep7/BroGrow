@@ -7,7 +7,7 @@
     tools:context=".auth.NameFragment">
 
     <ImageView
-        android:id="@+id/imageView2"
+        android:id="@+id/back_btn"
         android:layout_width="30dp"
         android:layout_height="30dp"
         android:layout_marginVertical="10dp"
@@ -27,11 +27,11 @@
         android:textSize="24sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView2" />
+        app:layout_constraintTop_toBottomOf="@+id/back_btn" />
 
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/phone_layout"
+        android:id="@+id/name_layout"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -75,7 +75,7 @@
         app:cornerRadius="8dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/phone_layout" />
+        app:layout_constraintTop_toBottomOf="@+id/name_layout" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

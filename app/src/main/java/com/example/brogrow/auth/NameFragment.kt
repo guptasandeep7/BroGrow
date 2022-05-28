@@ -2,21 +2,29 @@ package com.example.brogrow.auth
 
 import android.content.Context
 import android.os.Bundle
+import android.provider.ContactsContract
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
+import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import com.example.brogrow.databinding.FragmentNameBinding
+import com.example.brogrow.repo.DATASTORE_NAME
+import com.example.brogrow.repo.Datastore
+import kotlinx.coroutines.launch
 
 class NameFragment : Fragment() {
 
     private var _binding:FragmentNameBinding? = null
     private val binding get() = _binding!!
+    lateinit var datastore: Datastore
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        datastore = Datastore(requireContext())
     }
 
     override fun onCreateView(
@@ -25,6 +33,24 @@ class NameFragment : Fragment() {
     ): View? {
         _binding = FragmentNameBinding.inflate(inflater,container,false)
 
+
+        binding.nextBtn.setOnClickListener {
+            val name = binding.nameEt.text.toString()
+            if(!name.isNullOrEmpty()){
+                lifecycleScope.launch {
+                    datastore.changeLoginState(true)
+                    datastore.saveToDatastore(Datastore.NAME_KEY,name,requireContext())
+                }
+                // navigate to dashboard
+            }
+            else{
+                binding.nameLayout.helperText = "Enter valid name"
+            }
+        }
+
+        binding.backBtn.setOnClickListener {
+            findNavController().navigateUp()
+        }
 
         return binding.root
     }

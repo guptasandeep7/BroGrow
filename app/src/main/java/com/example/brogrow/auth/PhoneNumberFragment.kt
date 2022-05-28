@@ -7,16 +7,24 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.example.brogrow.R
 import com.example.brogrow.databinding.FragmentPhoneNumberBinding
+import com.example.brogrow.repo.Datastore
+import kotlinx.coroutines.launch
 
 class PhoneNumberFragment : Fragment() {
     private var _binding: FragmentPhoneNumberBinding? = null
     private val binding get() = _binding!!
+    lateinit var datastore: Datastore
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        datastore = Datastore(requireContext())
+
     }
 
     override fun onCreateView(
@@ -26,9 +34,16 @@ class PhoneNumberFragment : Fragment() {
         _binding = FragmentPhoneNumberBinding.inflate(inflater, container, false)
 
         binding.otpBtn.setOnClickListener {
-            val phone = binding.phoneEt.text
-            if(phone.toString().length == 10)
-            findNavController().navigate(R.id.action_phoneNumberFragment_to_otpFragment)
+            val phone = binding.phoneEt.text.toString()
+            if(phone.length == 10){
+                lifecycleScope.launch {
+                    datastore.saveToDatastore(Datastore.PHONE_NUMBER,phone,requireContext())
+                }
+                findNavController().navigate(R.id.action_phoneNumberFragment_to_otpFragment)
+            }
+            else{
+                binding.phoneLayout.helperText = "Enter valid phone number"
+            }
         }
         return binding.root
     }
