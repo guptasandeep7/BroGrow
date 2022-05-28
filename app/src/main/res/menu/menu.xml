@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:title="Home"
+        android:icon="@drawable/homepageselection"
+        android:id="@+id/homePageFragment"
+        />
+    <item android:title="Comparison"
+        android:icon="@drawable/comparisonselection"
+        android:id="@+id/comparisonPage"
+        />
+    <item android:title="Profile"
+        android:icon="@drawable/profileselection"
+        android:id="@+id/profilePage"/>
+</menu>

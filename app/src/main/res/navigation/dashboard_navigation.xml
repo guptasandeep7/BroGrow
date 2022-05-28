@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/dashboard_navigation"
+    app:startDestination="@id/homePageFragment">
+
+    <fragment
+        android:id="@+id/homePageFragment"
+        android:name="com.example.brogrow.view.dashboard.HomePageFragment"
+        android:label="HomePageFragment" />
+    <fragment
+        android:id="@+id/comparisonPage"
+        android:name="com.example.brogrow.view.dashboard.ComparisonPage"
+        android:label="fragment_comparison_page"
+        tools:layout="@layout/fragment_comparison_page" />
+    <fragment
+        android:id="@+id/profilePage"
+        android:name="com.example.brogrow.view.dashboard.ProfilePage"
+        android:label="fragment_profile_page"
+        tools:layout="@layout/fragment_profile_page" />
+</navigation>
