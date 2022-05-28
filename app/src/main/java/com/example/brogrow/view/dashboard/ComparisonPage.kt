@@ -1,60 +1,217 @@
 package com.example.brogrow.view.dashboard
 
+import android.content.Intent
 import android.os.Bundle
-import androidx.fragment.app.Fragment
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.*
+import androidx.core.content.ContextCompat
+import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import com.example.brogrow.R
+import com.example.brogrow.databinding.FragmentComparisonPageBinding
+import com.google.android.material.bottomsheet.BottomSheetDialog
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [ComparisonPage.newInstance] factory method to
- * create an instance of this fragment.
- */
 class ComparisonPage : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
+
+    private var _binding: FragmentComparisonPageBinding? = null
+    private val binding get() = _binding!!
+    private lateinit var selectedCategory:String
+    private lateinit var selectedPincode:String
+    private lateinit var selectedCategory2:String
+    private lateinit var selectedPincode2:String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
+
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_comparison_page, container, false)
+        _binding = FragmentComparisonPageBinding.inflate(inflater, container, false)
+
+        binding.categoryBtn.setOnClickListener {
+            val bottomSheet = BottomSheetDialog(requireContext())
+            val dialogView =
+                LayoutInflater.from(requireContext())
+                    .inflate(R.layout.fragment_bottom_fashion, null)
+            bottomSheet.setContentView(dialogView)
+            bottomSheet.show()
+            var listview = dialogView.findViewById<ListView>(R.id.listview)
+            var edittext = dialogView.findViewById<EditText>(R.id.edit_text)
+            var arrayList = arrayListOf(
+                "Hospitality",
+                "Logistics",
+                "Banks",
+                "Telecom",
+                "Paper",
+                "Media & Entertainment",
+                "Ship Building",
+                "Automobile & Ancillaries",
+                "Electricals",
+                "Metals & Mining",
+                "Footwear",
+                "Software & IT Services",
+                "Insurance",
+                "Aviation",
+                "Infrastructure",
+                "Containers & Packaging",
+                "Real Estate",
+                "Construction Materials",
+                "Photographic Products",
+                "Diversified",
+                "ETF",
+                "Finance",
+                "Alcohol",
+                "Consumer Durables",
+                "Capital Goods",
+                "Textiles",
+                "Miscellaneous",
+                "Trading",
+                "FMCG",
+                "Plastic Products",
+                "Healthcare",
+                "Industrial Gases & Fuels",
+                "Agri",
+                "Oil & Gas",
+                "Diamond  &  Jewellery",
+                "Chemicals",
+                "Manufacturing",
+                "Power",
+                "Retailing"
+            )
+            var adapter =
+                ArrayAdapter(requireContext(), android.R.layout.simple_list_item_1, arrayList)
+            listview.adapter = adapter
+            edittext.addTextChangedListener(object : TextWatcher {
+                override fun beforeTextChanged(
+                    s: CharSequence?,
+                    start: Int,
+                    count: Int,
+                    after: Int
+                ) {
+
+                }
+
+                override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                    adapter.getFilter().filter(s);
+                }
+
+                override fun afterTextChanged(s: Editable?) {
+
+                }
+            })
+
+            listview.onItemClickListener =
+                AdapterView.OnItemClickListener { p0, p1, p2, p3 ->
+                    selectedCategory = arrayList[p2]
+                    binding.categoryBtn.text = selectedCategory
+                    binding.categoryBtn.setTextColor(ContextCompat.getColor(requireContext(), R.color.black))
+                    bottomSheet.cancel()
+                }
+        }
+
+        binding.category2Btn.setOnClickListener {
+            val bottomSheet = BottomSheetDialog(requireContext())
+            val dialogView =
+                LayoutInflater.from(requireContext())
+                    .inflate(R.layout.fragment_bottom_fashion, null)
+            bottomSheet.setContentView(dialogView)
+            bottomSheet.show()
+            var listview = dialogView.findViewById<ListView>(R.id.listview)
+            var edittext = dialogView.findViewById<EditText>(R.id.edit_text)
+            var arrayList = arrayListOf(
+                "Hospitality",
+                "Logistics",
+                "Banks",
+                "Telecom",
+                "Paper",
+                "Media & Entertainment",
+                "Ship Building",
+                "Automobile & Ancillaries",
+                "Electricals",
+                "Metals & Mining",
+                "Footwear",
+                "Software & IT Services",
+                "Insurance",
+                "Aviation",
+                "Infrastructure",
+                "Containers & Packaging",
+                "Real Estate",
+                "Construction Materials",
+                "Photographic Products",
+                "Diversified",
+                "ETF",
+                "Finance",
+                "Alcohol",
+                "Consumer Durables",
+                "Capital Goods",
+                "Textiles",
+                "Miscellaneous",
+                "Trading",
+                "FMCG",
+                "Plastic Products",
+                "Healthcare",
+                "Industrial Gases & Fuels",
+                "Agri",
+                "Oil & Gas",
+                "Diamond  &  Jewellery",
+                "Chemicals",
+                "Manufacturing",
+                "Power",
+                "Retailing"
+            )
+            var adapter =
+                ArrayAdapter(requireContext(), android.R.layout.simple_list_item_1, arrayList)
+            listview.adapter = adapter
+            edittext.addTextChangedListener(object : TextWatcher {
+                override fun beforeTextChanged(
+                    s: CharSequence?,
+                    start: Int,
+                    count: Int,
+                    after: Int
+                ) {
+
+                }
+
+                override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                    adapter.getFilter().filter(s);
+                }
+
+                override fun afterTextChanged(s: Editable?) {
+
+                }
+            })
+
+            listview.onItemClickListener =
+                AdapterView.OnItemClickListener { p0, p1, p2, p3 ->
+                    selectedCategory2 = arrayList[p2]
+                    binding.category2Btn.text = selectedCategory2
+                    binding.category2Btn.setTextColor(ContextCompat.getColor(requireContext(), R.color.black))
+                    bottomSheet.cancel()
+                }
+        }
+
+
+        binding.compareBtn.setOnClickListener {
+            selectedPincode = binding.pincodeEt.text.toString()
+            selectedPincode2 = binding.pincode2Et.text.toString()
+
+            // API Call
+
+            startActivity(Intent(requireActivity(),CompareActivity::class.java))
+
+        }
+        return binding.root
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment ComparisonPage.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            ComparisonPage().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
     }
 }

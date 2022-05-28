@@ -38,5 +38,14 @@
         android:id="@+id/nameFragment"
         android:name="com.example.brogrow.auth.NameFragment"
         android:label="fragment_name"
-        tools:layout="@layout/fragment_name" />
+        tools:layout="@layout/fragment_name" >
+        <action
+            android:id="@+id/action_nameFragment_to_firstFragment"
+            app:destination="@id/firstFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/firstFragment"
+        android:name="com.example.brogrow.auth.FirstFragment"
+        android:label="fragment_first"
+        tools:layout="@layout/fragment_first" />
 </navigation>

@@ -13,6 +13,7 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import com.example.brogrow.R
 import com.example.brogrow.databinding.FragmentNameBinding
 import com.example.brogrow.model.UserResponse
 import com.example.brogrow.network.ServiceBuilder
@@ -78,8 +79,7 @@ class NameFragment : Fragment() {
                 when {
                     response.isSuccessful -> {
                         binding.progressBar2.visibility = View.GONE
-                        startActivity(Intent(activity,DashBoardActivity::class.java))
-                        activity?.finish()
+                        findNavController().navigate(R.id.action_nameFragment_to_firstFragment)
                     }
                     else -> Toast.makeText(requireContext(), "Failed!!! Try again", Toast.LENGTH_SHORT).show()
                 }
