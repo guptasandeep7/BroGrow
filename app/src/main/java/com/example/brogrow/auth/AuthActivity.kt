@@ -20,7 +20,8 @@ class AuthActivity : AppCompatActivity() {
 
         lifecycleScope.launch {
             if(datastore.isLogin()){
-                startActivity(Intent(this@AuthActivity,DashBoardActivity::class.java))
+                startActivity(Intent(this@AuthActivity, DashBoardActivity::class.java))
+                finish()
             }
         }
     }
