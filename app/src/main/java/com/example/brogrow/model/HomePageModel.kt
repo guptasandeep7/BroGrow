@@ -1,4 +1,6 @@
-package com.example.brogrow.model.HomePageModel
+package com.example.brogrow.model
+
+import com.example.brogrow.model.HomePage.*
 
 data class HomePageModel(
     val competitorAnalysis: CompetitorAnalysis,

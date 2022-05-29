@@ -1,6 +1,6 @@
 package com.example.brogrow.network
 
-import com.example.brogrow.model.HomePageModel.HomePageModel
+import com.example.brogrow.model.HomePageModel
 import com.example.brogrow.model.UserResponse
 import retrofit2.Call
 import retrofit2.http.Field

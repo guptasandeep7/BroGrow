@@ -2,7 +2,7 @@ package com.example.brogrow.repo
 
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
-import com.example.brogrow.model.HomePageModel.HomePageModel
+import com.example.brogrow.model.HomePageModel
 import com.example.brogrow.network.ApiInterface
 import retrofit2.Call
 import retrofit2.Callback
