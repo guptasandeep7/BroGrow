@@ -21,10 +21,11 @@ import org.json.JSONException
 
 class CompareActivity : AppCompatActivity() {
     private lateinit var comparisionPageViewModel: ComparisionPageViewModel
+    private lateinit var binding: ActivityCompareBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val binding: ActivityCompareBinding = DataBindingUtil.setContentView(
+        binding = DataBindingUtil.setContentView(
             this, R.layout.activity_compare)
         actionBar?.hide()
 
@@ -33,31 +34,8 @@ class CompareActivity : AppCompatActivity() {
 
         comparisionPageViewModel = ViewModelProvider(this)[ComparisionPageViewModel::class.java]
 
-        binding.area1.text = comparisionPageViewModel.district1.toString()
-        binding.area2.text = comparisionPageViewModel.district2.toString()
-
-        binding.category1.text = comparisionPageViewModel.category1.toString()
-        binding.category2.text = comparisionPageViewModel.category2.toString()
-
-        comparisionPageViewModel.result1.observe(this){
-            when(it){
-                is Response.Success -> {
-
-                }
-            }
-
-        }
-
-        comparisionPageViewModel.result2.observe(this){
-            when(it){
-                is Response.Success -> {
-                    binding.data2 = it.data
-                }
-            }
-        }
-
-
-
+        binding.category1.text = ComparisonPage.selectedCategory2
+        binding.category2.text = ComparisonPage.selectedCategory
 
     }
 
@@ -81,19 +59,26 @@ class CompareActivity : AppCompatActivity() {
                             val obj = postOfficeArray.getJSONObject(0)
 
                             val district = obj.getString("District")
-                            comparisionPageViewModel.district2 = district
+                            binding.area2.text = district
                             comparisionPageViewModel.category2 = selectedCategory2
                             val state = obj.getString("State")
                             val country = obj.getString("Country")
                             lifecycleScope.launch {
 
-                                comparisionPageViewModel.result2 =
+                                var result2 =
                                     comparisionPageViewModel.getData2(
                                         pincode,
                                         makeSlug(state).toString(),
                                         district.lowercase(),
                                         selectedCategory2
                                     )
+                                result2.observe(this@CompareActivity){
+                                    when(it){
+                                        is Response.Success -> {
+                                            binding.data2 = it.data
+                                        }
+                                    }
+                                }
                             }
 
                         }
@@ -128,19 +113,27 @@ class CompareActivity : AppCompatActivity() {
                             val obj = postOfficeArray.getJSONObject(0)
 
                             val district = obj.getString("District")
-                            comparisionPageViewModel.district1 = district
+                            binding.area1.text = district
                             comparisionPageViewModel.category1 = selectedCategory
                             val state = obj.getString("State")
                             val country = obj.getString("Country")
                             lifecycleScope.launch {
 
-                                comparisionPageViewModel.result1 =
+                                var result1 =
                                     comparisionPageViewModel.getData1(
                                         pincode,
                                         makeSlug(state).toString(),
                                         district.lowercase(),
                                         selectedCategory
                                     )
+                                result1.observe(this@CompareActivity){
+                                    when(it){
+                                        is Response.Success -> {
+                                            binding.data1 = it.data
+
+                                        }
+                                    }
+                                }
                             }
 
                         }
