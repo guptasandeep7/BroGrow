@@ -31,11 +31,11 @@ class FirstFragment : Fragment() {
 
     private var _binding: FragmentFirstBinding? = null
     private val binding get() = _binding!!
-    private lateinit var selectedCategory: String
-    private lateinit var selectedPincode: String
+
+        lateinit var selectedCategory: String
+         lateinit var selectedPincode: String
     lateinit var homePageViewModel: HomePageViewModel
-
-
+    lateinit var state:String
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         homePageViewModel = ViewModelProvider(this)[HomePageViewModel::class.java]
@@ -170,7 +170,7 @@ class FirstFragment : Fragment() {
                             val obj = postOfficeArray.getJSONObject(0)
 
                             val district = obj.getString("District")
-                            val state = obj.getString("State")
+                             state = obj.getString("State")
                             val country = obj.getString("Country")
                             lifecycleScope.launch {
 

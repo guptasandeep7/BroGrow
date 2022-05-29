@@ -22,6 +22,7 @@ import com.android.volley.VolleyError
 import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.Volley
 import com.example.brogrow.R
+import com.example.brogrow.auth.FirstFragment
 import com.example.brogrow.databinding.FragmentHomePageBinding
 import com.example.brogrow.model.HomePageModel
 import com.example.brogrow.viewmodel.HomePageViewModel
@@ -53,6 +54,8 @@ class HomePageFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         homePageViewModel=ViewModelProvider(this)[HomePageViewModel::class.java]
+        pincode=FirstFragment().selectedPincode
+        state=FirstFragment().state
     }
 
     override fun onCreateView(
@@ -61,7 +64,7 @@ class HomePageFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         binding=DataBindingUtil.inflate(inflater,R.layout.fragment_home_page, container, false)
-
+        getDataFromPinCode(pincode)
         binding.Location.setOnClickListener(object : View.OnClickListener {
             override fun onClick(v: View?) {
                 val bottomSheet = BottomSheetDialog(requireContext())
