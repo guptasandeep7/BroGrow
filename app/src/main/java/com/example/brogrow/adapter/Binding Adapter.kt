@@ -9,3 +9,8 @@ import com.example.brogrow.R
 fun ProgressBar.toInt(data:Double) {
     this.progress = data.toInt()
 }
+
+@BindingAdapter("toString")
+fun TextView.toString(data:Double) {
+    this.text = data.toInt().toString()
+}
