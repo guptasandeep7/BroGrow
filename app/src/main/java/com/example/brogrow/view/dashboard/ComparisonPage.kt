@@ -10,22 +10,34 @@ import android.view.ViewGroup
 import android.widget.*
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
-import androidx.navigation.fragment.findNavController
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
+import com.android.volley.Request
+import com.android.volley.toolbox.JsonObjectRequest
+import com.android.volley.toolbox.Volley
 import com.example.brogrow.R
 import com.example.brogrow.databinding.FragmentComparisonPageBinding
+import com.example.brogrow.utill.makeSlug
+import com.example.brogrow.viewmodel.ComparisionPageViewModel
 import com.google.android.material.bottomsheet.BottomSheetDialog
+import kotlinx.coroutines.launch
+import org.json.JSONException
 
 class ComparisonPage : Fragment() {
 
     private var _binding: FragmentComparisonPageBinding? = null
     private val binding get() = _binding!!
-    private lateinit var selectedCategory:String
-    private lateinit var selectedPincode:String
-    private lateinit var selectedCategory2:String
-    private lateinit var selectedPincode2:String
+    companion object{
+        lateinit var selectedCategory: String
+        lateinit var selectedPincode: String
+        lateinit var selectedCategory2: String
+        lateinit var selectedPincode2: String
+    }
+    lateinit var comparisionPageViewModel: ComparisionPageViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        comparisionPageViewModel = ViewModelProvider(this)[ComparisionPageViewModel::class.java]
 
     }
 
@@ -111,7 +123,12 @@ class ComparisonPage : Fragment() {
                 AdapterView.OnItemClickListener { p0, p1, p2, p3 ->
                     selectedCategory = arrayList[p2]
                     binding.categoryBtn.text = selectedCategory
-                    binding.categoryBtn.setTextColor(ContextCompat.getColor(requireContext(), R.color.black))
+                    binding.categoryBtn.setTextColor(
+                        ContextCompat.getColor(
+                            requireContext(),
+                            R.color.black
+                        )
+                    )
                     bottomSheet.cancel()
                 }
         }
@@ -192,7 +209,12 @@ class ComparisonPage : Fragment() {
                 AdapterView.OnItemClickListener { p0, p1, p2, p3 ->
                     selectedCategory2 = arrayList[p2]
                     binding.category2Btn.text = selectedCategory2
-                    binding.category2Btn.setTextColor(ContextCompat.getColor(requireContext(), R.color.black))
+                    binding.category2Btn.setTextColor(
+                        ContextCompat.getColor(
+                            requireContext(),
+                            R.color.black
+                        )
+                    )
                     bottomSheet.cancel()
                 }
         }
@@ -202,16 +224,12 @@ class ComparisonPage : Fragment() {
             selectedPincode = binding.pincodeEt.text.toString()
             selectedPincode2 = binding.pincode2Et.text.toString()
 
-            // API Call
-
-            startActivity(Intent(requireActivity(),CompareActivity::class.java))
+            startActivity(Intent(requireActivity(), CompareActivity::class.java))
 
         }
         return binding.root
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
 
-    }
+
 }

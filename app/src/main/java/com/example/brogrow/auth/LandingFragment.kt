@@ -24,7 +24,7 @@ class LandingFragment : Fragment() {
         val startButton = view.findViewById<MaterialButton>(R.id.start_btn)
 
         startButton.setOnClickListener {
-            findNavController().navigate(R.id.action_landingFragment_to_phoneNumberFragment)
+            findNavController().navigate(R.id.action_landingFragment_to_firstFragment)
         }
 
         return view
