@@ -54,8 +54,9 @@ class HomePageFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         homePageViewModel=ViewModelProvider(this)[HomePageViewModel::class.java]
-        pincode=FirstFragment().selectedPincode
-        state=FirstFragment().state
+        pincode=FirstFragment.selectedPincode
+        filter=FirstFragment.selectedCategory
+
     }
 
     override fun onCreateView(

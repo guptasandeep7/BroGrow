@@ -31,11 +31,11 @@ class FirstFragment : Fragment() {
 
     private var _binding: FragmentFirstBinding? = null
     private val binding get() = _binding!!
-
+    companion object{
         lateinit var selectedCategory: String
-         lateinit var selectedPincode: String
+        lateinit var selectedPincode: String
+    }
     lateinit var homePageViewModel: HomePageViewModel
-    lateinit var state:String
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         homePageViewModel = ViewModelProvider(this)[HomePageViewModel::class.java]
@@ -134,7 +134,9 @@ class FirstFragment : Fragment() {
         }
 
         binding.nextBtn.setOnClickListener {
+
             selectedPincode = binding.pincodeEt.text.toString()
+
             if (selectedCategory.isNullOrEmpty() || selectedPincode.isNullOrEmpty()) {
                 Toast.makeText(
                     requireContext(),
@@ -142,66 +144,13 @@ class FirstFragment : Fragment() {
                     Toast.LENGTH_SHORT
                 ).show()
             } else {
-                getHomeData(selectedPincode)
+                startActivity(Intent(activity,DashBoardActivity::class.java))
+                activity?.finish()
             }
         }
         return binding.root
 
     }
 
-    private fun getHomeData(pinCode: String) {
-        binding.progressBar2.visibility = View.VISIBLE
 
-
-        val url = "http://www.postalpincode.in/api/pincode/$pinCode"
-
-        val queue = Volley.newRequestQueue(requireContext())
-
-        val objectRequest =
-            JsonObjectRequest(Request.Method.GET, url, null,
-                { response ->
-                    try {
-
-                        val postOfficeArray = response!!.getJSONArray("PostOffice")
-                        if (response!!.getString("Status") == "Error") {
-
-                        } else {
-
-                            val obj = postOfficeArray.getJSONObject(0)
-
-                            val district = obj.getString("District")
-                             state = obj.getString("State")
-                            val country = obj.getString("Country")
-                            lifecycleScope.launch {
-
-                                var result1 = homePageViewModel.getHomeLiveData(
-                                    pinCode,
-                                    makeSlug(state).toString(),
-                                    district.lowercase(),
-                                    selectedCategory
-                                )
-                                result1.observe(viewLifecycleOwner) {
-                                    when (it) {
-                                        is Response.Success -> {
-                                            binding.progressBar2.visibility = View.GONE
-                                            startActivity(Intent(activity,DashBoardActivity::class.java))
-                                            activity?.finish()
-                                        }
-                                        is Response.Loading -> binding.progressBar2.visibility = View.VISIBLE
-
-                                    }
-                                }
-                            }
-
-                        }
-                    } catch (e: JSONException) {
-
-                        e.printStackTrace()
-                    }
-                }) { error ->
-                Toast.makeText(requireContext(), error.toString(), Toast.LENGTH_SHORT)
-                    .show()
-            }
-        queue.add(objectRequest)
-    }
 }
