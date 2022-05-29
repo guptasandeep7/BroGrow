@@ -1,4 +1,4 @@
-package com.example.brogrow.model.HomePageModel
+package com.example.brogrow.model.HomePage
 
 data class Competitor(
     val competitor_name: String,

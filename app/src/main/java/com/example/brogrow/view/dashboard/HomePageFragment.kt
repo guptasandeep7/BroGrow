@@ -21,7 +21,7 @@ import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.Volley
 import com.example.brogrow.R
 import com.example.brogrow.databinding.FragmentHomePageBinding
-import com.example.brogrow.model.HomePageModel.HomePageModel
+import com.example.brogrow.model.HomePageModel
 import com.example.brogrow.viewmodel.HomePageViewModel
 import com.github.mikephil.charting.data.PieData
 import com.github.mikephil.charting.data.PieDataSet

@@ -14,6 +14,9 @@
             android:id="@+id/action_landingFragment_to_phoneNumberFragment"
             app:destination="@id/phoneNumberFragment"
             app:enterAnim="@anim/slide_in_right" />
+        <action
+            android:id="@+id/action_landingFragment_to_firstFragment"
+            app:destination="@id/firstFragment" />
     </fragment>
     <fragment
         android:id="@+id/phoneNumberFragment"
