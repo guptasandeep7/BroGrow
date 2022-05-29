@@ -1,7 +1,9 @@
 package com.example.brogrow.view.dashboard
 
+import android.app.AlertDialog
 import android.content.res.ColorStateList
 import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -47,6 +49,7 @@ class HomePageFragment : Fragment() {
      var district:String=""
     var state:String=""
     var pincode:String=""
+    var filter:String=""
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         homePageViewModel=ViewModelProvider(this)[HomePageViewModel::class.java]
@@ -67,10 +70,10 @@ class HomePageFragment : Fragment() {
                 var okButton=dialodView.findViewById<Button>(R.id.PinCodeButton)
                 okButton.setOnClickListener(object : View.OnClickListener {
                     override  fun onClick(v: View?) {
+                        bottomSheet.dismiss()
                         var pincodeBox=dialodView.findViewById<EditText>(R.id.textView2)
                         pincode=pincodeBox.text.toString()
                         getDataFromPinCode(pincode)
-
                     }
                 })
                 bottomSheet.setContentView(dialodView)
@@ -131,6 +134,7 @@ class HomePageFragment : Fragment() {
                         id: Long
                     ) {
                         binding.Fashion.text=adapter.getItem(position)
+                        filter=adapter.getItem(position).toString()
                         getDataFromPinCode(pincode)
                         bottomSheet.dismiss()
 
@@ -159,7 +163,8 @@ class HomePageFragment : Fragment() {
        {
            var size= result?.competitorAnalysis?.competitors!!.size*100
            if(i<5)
-           {  Toast.makeText(requireContext(),((result!!.competitorAnalysis.competitors[i].competitor_rating.toFloat()/size)*100).toString(),Toast.LENGTH_LONG).show()
+           {
+//               Toast.makeText(requireContext(),((result!!.competitorAnalysis.competitors[i].competitor_rating.toFloat()/size)*100).toString(),Toast.LENGTH_LONG).show()
                typeAmountMap[result!!.competitorAnalysis.competitors[i].competitor_name.toString()]=(result!!.competitorAnalysis.competitors[i].competitor_rating.toFloat())/size*100
            }
        }
@@ -237,12 +242,18 @@ class HomePageFragment : Fragment() {
                             binding.Location.text=district.toString()
                             val country = obj.getString("Country")
                             lifecycleScope.launch {
-
+                                val dialod1View =
+                                    LayoutInflater.from(requireContext()).inflate(R.layout.loader, null)
+                                val mBuilder = AlertDialog.Builder(requireContext())
+                                    .setView(dialod1View)
+                                val alertDialog: AlertDialog = mBuilder.create()
+                                alertDialog.getWindow()!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT));
+                                alertDialog.show()
                                  var result1 = homePageViewModel.getHomeLiveData(
                                     pinCode,
                                     makeSlug(state).toString(),
                                     district.toLowerCase(),
-                                    "Alcohol"
+                                    filter
                                 )
                                 result1.observe(viewLifecycleOwner) {
                                     when (it) {
@@ -253,27 +264,35 @@ class HomePageFragment : Fragment() {
                                             {
                                                 binding.OpportunitiesProgressBar.progressTintList=
                                                     ColorStateList.valueOf(Color.parseColor("#CF3939"))
+                                                binding.textView4.setBackgroundColor(Color.parseColor("#CF3939"))
+                                                binding.textView5.text="Very less Opprtunities"
                                             }
                                             else if(opportunityrating<50)
                                             {
                                                 binding.OpportunitiesProgressBar.progressTintList=
                                                     ColorStateList.valueOf(Color.parseColor("#D0691F"))
+                                                binding.textView4.setBackgroundColor(Color.parseColor("#D0691F"))
+                                                binding.textView5.text="Average Opportunities"
                                             }
                                             else if(opportunityrating<75)
                                             {
                                                 binding.OpportunitiesProgressBar.progressTintList=
                                                     ColorStateList.valueOf(Color.parseColor("#CFB739"))
+                                                binding.textView4.setBackgroundColor(Color.parseColor("#CFB739"))
+                                                binding.textView5.text="Moderate Opportunities"
                                             }
                                             else
                                             {
                                                 binding.OpportunitiesProgressBar.progressTintList=
                                                     ColorStateList.valueOf(Color.parseColor("#43932F"))
+                                                binding.textView4.setBackgroundColor(Color.parseColor("#43932F"))
                                             }
                                             showPieChart()
 
                                             binding.OpportunitiesPercentage.text= it.data!!.oppurtunityRating.rating.toString() + "%"
                                             binding.OpportunitiesProgressBar.progress =
                                                 it.data?.oppurtunityRating?.rating?.toInt()!!
+                                            alertDialog.dismiss()
                                         }
 
                                     }
