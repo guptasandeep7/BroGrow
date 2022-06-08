@@ -106,6 +106,7 @@
                         android:layout_marginStart="85dp"
                         android:layout_marginTop="17dp"
                         android:layout_marginEnd="85dp"
+                        android:progressBackgroundTint="#E8E8E8"
                         android:progressDrawable="@drawable/circle"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
@@ -144,7 +145,7 @@
                         android:layout_marginTop="52dp"
                         android:fontFamily="@font/source_sans_pro_bold"
                         android:textColor="#000000"
-                        android:textSize="30sp"
+                        android:textSize="24sp"
                         app:layout_constraintStart_toStartOf="@+id/OpportunitiesProgressBar"
                         app:layout_constraintTop_toTopOf="@+id/OpportunitiesProgressBar" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
@@ -205,6 +206,7 @@
                 android:drawableEnd="@drawable/ic_baseline_arrow_forward_ios_24"
                 android:paddingTop="15dp"
                 android:paddingBottom="15dp"
+                android:textColor="@color/white"
                 android:text="Category Analysis"
                 app:cornerRadius="16dp"
                 app:layout_constraintBottom_toBottomOf="parent"

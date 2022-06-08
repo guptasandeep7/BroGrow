@@ -203,7 +203,13 @@ class HomePageFragment : Fragment() {
         binding.CompetitionChart.invalidate()
     }
     private fun getDataFromPinCode(pinCode: String) {
-
+        val dialod1View =
+            LayoutInflater.from(requireContext()).inflate(R.layout.loader, null)
+        val mBuilder = AlertDialog.Builder(requireContext())
+            .setView(dialod1View)
+        val alertDialog: AlertDialog = mBuilder.create()
+        alertDialog.getWindow()!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT));
+        alertDialog.show()
         // clearing our cache of request queue.
 //        mRequestQueue.cache.clear()
 
@@ -246,13 +252,7 @@ class HomePageFragment : Fragment() {
                             binding.Location.text=district.toString()
                             val country = obj.getString("Country")
                             lifecycleScope.launch {
-                                val dialod1View =
-                                    LayoutInflater.from(requireContext()).inflate(R.layout.loader, null)
-                                val mBuilder = AlertDialog.Builder(requireContext())
-                                    .setView(dialod1View)
-                                val alertDialog: AlertDialog = mBuilder.create()
-                                alertDialog.getWindow()!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT));
-                                alertDialog.show()
+
                                  var result1 = homePageViewModel.getHomeLiveData(
                                     pinCode,
                                     makeSlug(state).toString(),
