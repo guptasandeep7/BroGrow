@@ -1,6 +1,6 @@
-# BroGrow-Backend
+# BroGrow-Frontend
 
-Bro-Grow is a business icubator Android App which enables entrepreneurs to make smart business decisions based on micro-market.
+Bro-Grow is a business incubator Android App which enables entrepreneurs to make smart business decisions based on micro-market.
 
 ## Problem Statement
 
